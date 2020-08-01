@@ -3,16 +3,16 @@ import time
 
 class Lotto:
 	def __init__(self):
-		self.win = set()
+		self.lottoNum = set()
 		self.autoNum = set()
-		self.myNum = set()
+		self.manualNum = set()
 
-	def init(self):
-		self.win.clear()
-		self.myNum = set()
+	def new(self):
+		self.lottoNum.clear()
+		self.manualNum = set()
 		self.autoNum = set()
-		while len(self.win) < 6:
-			self.win.add(random.randrange(1, 46)
+		while len(self.lottoNum) < 6:
+			self.lottoNum.add(random.randrange(1, 46)
 		
 	def auto(self):
 		self.autoNum.clear()
@@ -20,43 +20,35 @@ class Lotto:
 			self.autoNum.add(random.randrange(1, 46)
 
 	def insert(self):
-		self.myNum.clear()
-		while len(self.myNum) < 6:
-			print(str([len(self.myNum) + 1]))
+		self.manualNum.clear()
+		while len(self.manualNum) < 6:
 			n = int(input())
-			if (n <= 0) or (n >= 46) or (n in self.myNum):
+			if (n <= 0) or (n >= 46) or (n in self.manualNum):
 				print("중복된 번호를 넣었거나 잘못된 번호를 입력하였습니다. 다시 입력해주세요.")
 				continue
-			self.myNum.add(n)
-			print("현재까지 번호: " + str(list(self.myNum)))
+			self.manualNum.add(n)
+			print("현재까지 번호: " + str(list(self.manualNum)))
 
 	def match(self):
-		if len(self.myNum) != 6:
+		if len(self.manualNum) != 6:
 			print("2번을 선택하여 번호를 다시 입력해주세요")
 			return
 
-		matchingMyNum = len(self.win.intersection(self.myNum))
+		matchingMyNum = len(self.lottoNum.intersection(self.manualNum))
 		if matchingMyNum == 6:
 			print("Sie haben gewonnen!")
 		else:
 			print("Nächstes Mal...")
 
-		matchingAutoNum = len(self.win.intersection(self.autoNum))
+		matchingAutoNum = len(self.lottoNum.intersection(self.autoNum))
 		if matchingAutoNum == 6:
 			print("Sie haben gewonnen!")
 		else:
 			print("Nächstes Mal...")
 
-	def printMyNum(self):
-		print("Meine Nummer sind: ", end="")
-		arr = list(self.win)
-		arr.sort()
-
-		print(arr, end="")
-		
 print("로또 프로그램을 실행합니다.")
 lotto = Lotto()
-lotto.init()
+lotto.new()
 while True:
 	print("1. 로또 번호 자동")
 	print("2. 로또 번호 수동")
@@ -70,7 +62,7 @@ while True:
 	elif num == 2:
 		lotto.insert()
 	elif num == 3:
-		lotto.init()
+		lotto.new()
 	elif num == 4:
 		lotto.match()
 	elif num == 5:
